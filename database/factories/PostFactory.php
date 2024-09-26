@@ -20,7 +20,8 @@ class PostFactory extends Factory
             'user_id' => rand(1, 3),
             'title' => fake()->sentence(),
             'slug' => fake()->slug(),
-            'content' => fake()->sentence(30, false)
+            'body' => fake()->sentence(30, false),
+            'image' => 'https://png.pngtree.com/thumb_back/fh260/background/20230516/pngtree-cute-wallpapers-cats-wallpapers-hd-4k-wallpapers-desktop-wallpapers-hd-image_2562853.jpg',
         ];
     }
 }
