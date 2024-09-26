@@ -48,11 +48,11 @@
                 </nav>
                 <div class="flex space-x-4">
                     <button
-                        class="border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-[#141652]">
+                        class="border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-[#141652] duration-300">
                         Chat Dengan AI
                     </button>
                     <a href="/laporkan-kekerasan"
-                        class="border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-[#141652]">
+                        class="border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-[#141652] duration-300">
                         Laporkan Kekerasan
                     </a>
                 </div>
@@ -86,14 +86,14 @@
             @if (Route::has('login'))
                 @auth
                     <a href="{{ url('/dashboard') }}"
-                        class="bg-[#141652] text-white text-center rounded-full py-1 font-semibold hover:bg-[#708CFF]">Dashboard</a>
+                        class="bg-[#141652] text-white text-center rounded-full py-1 font-semibold hover:bg-[#708CFF] duration-300">
+                        Dashboard
+                    </a>
                 @else
                     <a href="{{ route('login') }}"
-                        class="bg-[#141652] text-white text-center rounded-full py-1 font-semibold hover:bg-[#708CFF]">Dashboard
-                        Admin</a>
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="font-semibold hover:text-[#708CFF]">Register</a>
-                    @endif
+                        class="bg-[#141652] text-white text-center rounded-full py-1 font-semibold hover:bg-[#708CFF] duration-300">
+                        Login
+                    </a>
                 @endauth
             @endif
         </nav>
