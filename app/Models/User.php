@@ -45,8 +45,14 @@ class User extends Authenticatable
         ];
     }
 
+
     public function report()
     {
         return $this->hasMany(Report::class);
+    }
+
+    public function post()
+    {
+        return $this->hasMany(Post::class);
     }
 }
