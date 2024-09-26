@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Reporter extends Model
 {
     use HasFactory;
+
+    public function report()
+    {
+        return $this->hasOne(Report::class);
+    }
 }
