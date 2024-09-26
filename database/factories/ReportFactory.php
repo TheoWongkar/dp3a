@@ -17,7 +17,16 @@ class ReportFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'ticket_number' => 'TICKET-12345678',
+            'user_id' => fake()->numberBetween(1, 3),
+            'victim_id' => fake()->numberBetween(1, 3),
+            'perpetrator_id' => fake()->numberBetween(1, 3),
+            'reporter_id' => fake()->numberBetween(1, 3),
+            'violence_category' => 'Kekerasan Fisik',
+            'description' => fake()->sentence(),
+            'date' => fake()->date(),
+            'scene' => fake()->address(),
+            'evidence' => 'https://png.pngtree.com/thumb_back/fh260/background/20230516/pngtree-cute-wallpapers-cats-wallpapers-hd-4k-wallpapers-desktop-wallpapers-hd-image_2562853.jpg'
         ];
     }
 }

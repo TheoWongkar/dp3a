@@ -17,7 +17,10 @@ class VictimFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->name(),
+            'age' => fake()->numberBetween(10, 60),
+            'gender' => 'Laki-Laki',
+            'description' => fake()->sentence(6),
         ];
     }
 }

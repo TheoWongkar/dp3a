@@ -17,7 +17,9 @@ class StatusFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'report_id' => fake()->numberBetween(1, 3),
+            'status' => 'on proggres',
+            'description' => fake()->sentence(),
         ];
     }
 }

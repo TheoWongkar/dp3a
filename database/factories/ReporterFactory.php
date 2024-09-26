@@ -17,7 +17,10 @@ class ReporterFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'whatsapp' => fake()->phoneNumber(),
+            'telegram' => fake()->phoneNumber(),
+            'instagram' => fake()->firstName(),
+            'email' => fake()->email(),
         ];
     }
 }

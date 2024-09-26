@@ -17,7 +17,10 @@ class PerpetratorFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->name(),
+            'age' => fake()->numberBetween(10, 60),
+            'relationship_between' => 'Teman',
+            'description' => fake()->sentence(6),
         ];
     }
 }

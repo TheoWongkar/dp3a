@@ -32,9 +32,9 @@ return new class extends Migration
         Schema::create('reporters', function (Blueprint $table) {
             $table->id();
             $table->string('whatsapp')->nullable();
-            $table->integer('telegram')->nullable();
+            $table->string('telegram')->nullable();
             $table->string('instagram')->nullable();
-            $table->text('email')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
 
