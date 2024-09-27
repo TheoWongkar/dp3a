@@ -9,6 +9,19 @@ class Report extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'ticket_number',
+        'user_id',
+        'victim_id',
+        'perpetrator_id',
+        'reporter_id',
+        'violence_category',
+        'description',
+        'date',
+        'scene',
+        'evidence',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

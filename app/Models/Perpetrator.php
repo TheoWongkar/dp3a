@@ -9,6 +9,13 @@ class Perpetrator extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'age',
+        'relationship_between',
+        'description',
+    ];
+
     public function report()
     {
         return $this->hasOne(Report::class);

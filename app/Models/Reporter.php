@@ -9,6 +9,13 @@ class Reporter extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'whatsapp',
+        'telegram',
+        'instagram',
+        'email',
+    ];
+
     public function report()
     {
         return $this->hasOne(Report::class);

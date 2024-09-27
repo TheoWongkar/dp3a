@@ -9,6 +9,13 @@ class Victim extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'age',
+        'gender',
+        'description',
+    ];
+
     public function report()
     {
         return $this->hasOne(Report::class);

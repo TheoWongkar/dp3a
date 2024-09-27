@@ -9,6 +9,12 @@ class Status extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'report_id',
+        'status',
+        'description',
+    ];
+
     public function report()
     {
         return $this->belongsTo(Report::class);
