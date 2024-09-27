@@ -18,7 +18,7 @@
 
     <!-- Navbar -->
     <header x-show="isNavbarVisible" x-cloak
-        class="fixed w-full bg-[#141652] p-3 md:px-8 transition-transform duration-500 z-10"
+        class="fixed w-full bg-[#141652] px-3 py-4 md:px-8 transition-transform duration-500 z-20"
         x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 -translate-y-full"
         x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in-out duration-500"
         x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-full">
@@ -40,7 +40,7 @@
                 <span class="text-white text-lg font-semibold">DP3A SULUT</span>
             </div>
 
-            <div class="hidden md:flex items-center space-x-6">
+            <div class="hidden lg:flex items-center space-x-6">
                 <nav class="flex space-x-6 text-white">
                     <a href="/" class="hover:border-b border-white">Beranda</a>
                     <a href="/berita" class="hover:border-b border-white">Berita</a>
