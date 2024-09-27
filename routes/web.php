@@ -7,6 +7,18 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/berita', function () {
+    return view('posts');
+});
+
+Route::get('/cek-status', function () {
+    return view('statuses');
+});
+
+Route::get('/laporkan', function () {
+    return view('reports');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
