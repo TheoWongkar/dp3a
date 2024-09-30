@@ -51,7 +51,7 @@
                         class="border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-[#141652] duration-300">
                         Chat Dengan AI
                     </button>
-                    <a href="/laporkan-kekerasan"
+                    <a href="/laporkan"
                         class="border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-[#141652] duration-300">
                         Laporkan Kekerasan
                     </a>
