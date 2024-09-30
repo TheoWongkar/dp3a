@@ -17,7 +17,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="text-gray-900 antialiased" x-data="{ sidebarOpen: false, isVisible: true }">
+<body class="text-[#141652] antialiased" x-data="{ sidebarOpen: false, isVisible: true }">
 
     @include('layouts.navigation-guest')
 

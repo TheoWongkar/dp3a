@@ -11,7 +11,7 @@ Route::get('/berita', function () {
     return view('posts');
 });
 
-Route::get('/cek-status', function () {
+Route::get('/status-laporan', function () {
     return view('statuses');
 });
 
