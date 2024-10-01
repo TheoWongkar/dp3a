@@ -8,7 +8,7 @@
     <!-- Section Berita -->
     <div class="py-12 bg-gray-50">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white shadow-lg rounded-lg p-8">
+            <div class="bg-white shadow-lg rounded-lg p-6">
                 <!-- Tambah dan Cari -->
                 <div class="flex flex-col md:flex-row justify-between items-center mb-6 space-y-4 md:space-y-0">
                     <!-- Tambah Berita -->

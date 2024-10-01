@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -41,7 +42,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.post.create');
     }
 
     /**
@@ -49,7 +50,21 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|string|min:5|',
+            'image' => 'required|image|file|max:3072',
+            'body' => 'required|string',
+            'status' => 'required|string',
+        ]);
+
+        $validated['image'] = $request->file('image')->store('post-images');
+        $validated['user_id'] = Auth::id();
+
+
+        Post::create($validated);
+
+        return redirect()->route('berita.index')
+            ->with('success', 'Berita berhasil dibuat.');
     }
 
     /**
