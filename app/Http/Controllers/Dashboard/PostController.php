@@ -11,11 +11,17 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::with('user')->paginate(10);
+        $search = $request->get('search');
+
+        $posts = Post::with('user')
+            ->orderby('created_at', 'desc')
+            ->paginate(10);
+
         return view('dashboard.post.index', [
             'posts' => $posts,
+            'search' => $search
         ]);
     }
 

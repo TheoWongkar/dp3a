@@ -5,14 +5,15 @@
         </h2>
     </x-slot>
 
+    <!-- Section Berita -->
     <div class="py-12 bg-gray-50">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-lg rounded-lg p-8">
-                <!-- Header Section with Add and Search -->
+                <!-- Tambah dan Cari -->
                 <div class="flex flex-col md:flex-row justify-between items-center mb-6 space-y-4 md:space-y-0">
-                    <!-- Add Post Button -->
+                    <!-- Tambah Berita -->
                     <a href="/posts/create"
-                        class="flex items-center bg-[#141652] hover:bg-blue-800 text-white px-4 py-2 rounded-lg shadow-md transition duration-200 ease-in-out text-sm md:text-base">
+                        class="flex items-center bg-[#141652] hover:bg-blue-800 text-white px-4 py-2 rounded-lg transition duration-200 text-sm md:text-base w-full md:w-auto">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                             class="size-5 mr-1">
                             <path fill-rule="evenodd"
@@ -26,14 +27,13 @@
                         Tambah Pengumuman
                     </a>
 
-                    <!-- Search Form -->
+                    <!-- Cari Berita -->
                     <div class="flex space-x-2 w-full md:w-1/3">
-                        <form action="/posts" method="GET" class="flex w-full">
-                            <input type="text" name="search"
-                                class="border border-gray-300 rounded-l-full px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out shadow-sm"
-                                placeholder="Search posts...">
+                        <form action="{{ route('berita.index') }}" method="GET" class="flex w-full">
+                            <input type="text" name="search" value="{{ $search }}"
+                                class="rounded-l-full px-4 py-2 w-full" placeholder="Cari Berita...">
                             <button type="submit"
-                                class="bg-blue-500 hover:bg-blue-600 text-white rounded-r-full p-2 focus:outline-none shadow-md transition duration-200 ease-in-out flex items-center">
+                                class="bg-[#141652] border border-[#141652] hover:bg-blue-800 text-white rounded-r-full p-2 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                     class="w-5 h-5">
                                     <path fill-rule="evenodd"
@@ -45,59 +45,74 @@
                     </div>
                 </div>
 
-                <!-- Posts Table -->
+                <!-- Tabel Berita -->
                 <div class="overflow-x-auto">
-                    <table class="min-w-full bg-gray-100 rounded-xl shadow-md">
-                        <thead class="bg-[#141652] text-white">
-                            <tr>
-                                <th class="text-left py-3 px-2 sm:px-2 uppercase font-semibold text-xs sm:text-sm">#
-                                </th>
-                                <th class="text-left py-3 px-2 sm:px-4 uppercase font-semibold text-xs sm:text-sm">JUDUL
-                                </th>
-                                <th class="text-left py-3 px-2 sm:px-4 uppercase font-semibold text-xs sm:text-sm">
-                                    PENULIS</th>
-                                <th class="text-left py-3 px-2 sm:px-4 uppercase font-semibold text-xs sm:text-sm">
-                                    DIBUAT</th>
-                                <th class="text-left py-3 px-2 sm:px-4 uppercase font-semibold text-xs sm:text-sm">
-                                    STATUS</th>
-                                <th class="text-left py-3 px-2 sm:px-4 uppercase font-semibold text-xs sm:text-sm">
-                                    AKSI</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($posts as $post)
-                                <tr class="border-t hover:bg-blue-100 transition duration-200">
-                                    <td class="py-4 px-2 sm:px-4">{{ $loop->iteration }}</td>
-                                    <td class="py-4 px-2 sm:px-4">{{ substr($post->title, 0, 20) }}</td>
-                                    <td class="py-4 px-2 sm:px-4">{{ $post->user->name }}</td>
-                                    <td class="py-4 px-2 sm:px-4">{{ $post->created_at->format('d M Y') }}</td>
-                                    <td class="py-4 px-2 sm:px-4">Status</td>
-                                    <td class="py-4 px-2 sm:px-4 flex space-x-2">
-                                        <a href="/posts/1/edit"
-                                            class="inline-flex items-center bg-yellow-500 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full hover:bg-yellow-600 transition duration-200 ease-in-out shadow-md text-xs sm:text-sm">
-                                            <!-- Edit Icon -->
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 mr-1"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M17.414 2.586a2 2 0 010 2.828l-10 10a2 2 0 01-.878.478l-4 1a1 1 0 01-1.225-1.225l1-4a2 2 0 01.478-.878l10-10a2 2 0 012.828 0z" />
-                                            </svg>
-                                            Edit
-                                        </a>
-                                        <a href="/posts/1/delete"
-                                            class="inline-flex items-center bg-red-500 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full hover:bg-red-600 transition duration-200 ease-in-out shadow-md text-xs sm:text-sm">
-                                            <!-- Delete Icon -->
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 mr-1"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M6.5 4a1 1 0 00-1 1v1h-1v1h11v-1h-1V5a1 1 0 00-1-1H6.5zM7 9a1 1 0 00-1 1v7a1 1 0 001 1h6a1 1 0 001-1v-7a1 1 0 00-1-1H7z" />
-                                            </svg>
-                                            Delete
-                                        </a>
-                                    </td>
+                    @if ($posts->count())
+                        <table class="min-w-full bg-gray-100 rounded-xl shadow-md">
+                            <thead class="bg-[#141652] text-white">
+                                <tr>
+                                    <th
+                                        class="text-center py-3 px-2 sm:px-2 uppercase font-semibold text-xs sm:text-sm">
+                                        #
+                                    </th>
+                                    <th
+                                        class="text-center py-3 px-2 sm:px-4 uppercase font-semibold text-xs sm:text-sm">
+                                        JUDUL
+                                    </th>
+                                    <th class="text-left py-3 px-2 sm:px-4 uppercase font-semibold text-xs sm:text-sm">
+                                        PENULIS</th>
+                                    <th
+                                        class="text-center py-3 px-2 sm:px-4 uppercase font-semibold text-xs sm:text-sm">
+                                        DIBUAT</th>
+                                    <th
+                                        class="text-center py-3 px-2 sm:px-4 uppercase font-semibold text-xs sm:text-sm">
+                                        STATUS</th>
+                                    <th
+                                        class="text-center py-3 px-2 sm:px-4 uppercase font-semibold text-xs sm:text-sm">
+                                        AKSI</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($posts as $post)
+                                    <tr class="border-t hover:bg-blue-100 transition duration-200">
+                                        <td class="py-4 px-2 sm:px-4 text-center">{{ $loop->iteration }}</td>
+                                        <td class="py-4 px-2 sm:px-4">{{ substr($post->title, 0, 20) }}</td>
+                                        <td class="py-4 px-2 sm:px-4">{{ $post->user->name }}</td>
+                                        <td class="py-4 px-2 sm:px-4 text-center">
+                                            {{ $post->created_at->format('d M Y') }}
+                                        </td>
+                                        <td class="py-4 px-2 sm:px-4 text-center">Status</td>
+                                        <td class="py-4 px-2 sm:px-4 flex space-x-2 justify-center">
+                                            <a href="/posts/1/edit"
+                                                class="inline-flex items-center bg-yellow-500 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full hover:bg-yellow-600 transition duration-200 ease-in-out shadow-md text-xs sm:text-sm">
+                                                <!-- Edit Icon -->
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="h-4 w-4 sm:h-5 sm:w-5 mr-1" viewBox="0 0 20 20"
+                                                    fill="currentColor">
+                                                    <path
+                                                        d="M17.414 2.586a2 2 0 010 2.828l-10 10a2 2 0 01-.878.478l-4 1a1 1 0 01-1.225-1.225l1-4a2 2 0 01.478-.878l10-10a2 2 0 012.828 0z" />
+                                                </svg>
+                                                Edit
+                                            </a>
+                                            <a href="/posts/1/delete"
+                                                class="inline-flex items-center bg-red-500 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full hover:bg-red-600 transition duration-200 ease-in-out shadow-md text-xs sm:text-sm">
+                                                <!-- Delete Icon -->
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="h-4 w-4 sm:h-5 sm:w-5 mr-1" viewBox="0 0 20 20"
+                                                    fill="currentColor">
+                                                    <path
+                                                        d="M6.5 4a1 1 0 00-1 1v1h-1v1h11v-1h-1V5a1 1 0 00-1-1H6.5zM7 9a1 1 0 00-1 1v7a1 1 0 001 1h6a1 1 0 001-1v-7a1 1 0 00-1-1H7z" />
+                                                </svg>
+                                                Delete
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @else
+                        <p>postingan tidak ada</p>
+                    @endif
                 </div>
 
                 <!-- Pagination -->
