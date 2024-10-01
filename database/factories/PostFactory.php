@@ -22,6 +22,7 @@ class PostFactory extends Factory
             'slug' => fake()->slug(),
             'image' => 'https://png.pngtree.com/thumb_back/fh260/background/20230516/pngtree-cute-wallpapers-cats-wallpapers-hd-4k-wallpapers-desktop-wallpapers-hd-image_2562853.jpg',
             'body' => fake()->sentence(30, false),
+            'status' => 'Terbit',
         ];
     }
 }

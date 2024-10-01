@@ -14,14 +14,25 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
+        $status = $request->get('status');
 
         $posts = Post::with('user')
-            ->orderby('created_at', 'desc')
+            ->when($search, function ($query, $search) {
+                return $query->where('title', 'LIKE', "%{$search}%")
+                    ->orWhereHas('user', function ($query) use ($search) {
+                        $query->where('name', 'LIKE', "{$search}%"); // Ganti 'name' dengan kolom yang ingin dicari dari tabel users
+                    });
+            })
+            ->when($status, function ($query) use ($status) {
+                return $query->where('status', $status); // Menambahkan filter berdasarkan status
+            })
+            ->orderBy('created_at', 'desc')
             ->paginate(10);
 
         return view('dashboard.post.index', [
             'posts' => $posts,
-            'search' => $search
+            'search' => $search,
+            'status' => $status,
         ]);
     }
 

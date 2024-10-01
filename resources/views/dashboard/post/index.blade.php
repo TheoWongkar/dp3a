@@ -12,7 +12,7 @@
                 <!-- Tambah dan Cari -->
                 <div class="flex flex-col md:flex-row justify-between items-center mb-6 space-y-4 md:space-y-0">
                     <!-- Tambah Berita -->
-                    <a href="/posts/create"
+                    <a href="{{ route('berita.create') }}"
                         class="flex items-center bg-[#141652] hover:bg-blue-800 text-white px-4 py-2 rounded-lg transition duration-200 text-sm md:text-base w-full md:w-auto">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                             class="size-5 mr-1">
@@ -27,15 +27,23 @@
                         Tambah Pengumuman
                     </a>
 
-                    <!-- Cari Berita -->
                     <div class="flex space-x-2 w-full md:w-1/3">
                         <form action="{{ route('berita.index') }}" method="GET" class="flex w-full">
+                            <select name="status"
+                                class="bg-[#141652] text-white rounded-l-full px-4 py-2 border border-[#141652] focus:ring-0 focus:border-blue-800">
+                                <option value="">Status</option>
+                                <option value="Terbit" {{ $status === 'Terbit' ? 'selected' : '' }}>Terbit
+                                </option>
+                                <option value="Arsip" {{ $status === 'Arsip' ? 'selected' : '' }}>Arsip
+                                </option>
+                            </select>
                             <input type="text" name="search" value="{{ $search }}"
-                                class="rounded-l-full px-4 py-2 w-full" placeholder="Cari Berita...">
+                                class=" px-4 py-2 w-full border border-[#141652] focus:ring-0 focus:border-blue-800"
+                                placeholder="Cari berita..." autocomplete="off" autofocus />
                             <button type="submit"
-                                class="bg-[#141652] border border-[#141652] hover:bg-blue-800 text-white rounded-r-full p-2 flex items-center">
+                                class="bg-[#141652] hover:bg-blue-800 text-white rounded-r-full px-4 py-2 flex items-center transition duration-200">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                    class="w-5 h-5">
+                                    class="size-5">
                                     <path fill-rule="evenodd"
                                         d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
                                         clip-rule="evenodd" />
@@ -44,6 +52,7 @@
                         </form>
                     </div>
                 </div>
+
 
                 <!-- Tabel Berita -->
                 <div class="overflow-x-auto">
@@ -55,18 +64,17 @@
                                         class="text-center py-3 px-2 sm:px-2 uppercase font-semibold text-xs sm:text-sm">
                                         #
                                     </th>
-                                    <th
-                                        class="text-center py-3 px-2 sm:px-4 uppercase font-semibold text-xs sm:text-sm">
+                                    <th class="text-left py-3 px-2 sm:px-4 uppercase font-semibold text-xs sm:text-sm">
                                         JUDUL
                                     </th>
                                     <th class="text-left py-3 px-2 sm:px-4 uppercase font-semibold text-xs sm:text-sm">
                                         PENULIS</th>
                                     <th
                                         class="text-center py-3 px-2 sm:px-4 uppercase font-semibold text-xs sm:text-sm">
-                                        DIBUAT</th>
+                                        STATUS</th>
                                     <th
                                         class="text-center py-3 px-2 sm:px-4 uppercase font-semibold text-xs sm:text-sm">
-                                        STATUS</th>
+                                        DIBUAT</th>
                                     <th
                                         class="text-center py-3 px-2 sm:px-4 uppercase font-semibold text-xs sm:text-sm">
                                         AKSI</th>
@@ -79,30 +87,42 @@
                                         <td class="py-4 px-2 sm:px-4">{{ substr($post->title, 0, 20) }}</td>
                                         <td class="py-4 px-2 sm:px-4">{{ $post->user->name }}</td>
                                         <td class="py-4 px-2 sm:px-4 text-center">
+                                            @if ($post->status == 'Arsip')
+                                                <span
+                                                    class="inline-block bg-orange-600 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full hover:bg-orange-500 transition duration-200 ease-in-out shadow-md text-xs sm:text-sm">
+                                                    {{ $post->status }}
+                                                </span>
+                                            @elseif($post->status == 'Terbit')
+                                                <span
+                                                    class="inline-block bg-green-600 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full hover:bg-green-500 transition duration-200 ease-in-out shadow-md text-xs sm:text-sm">
+                                                    {{ $post->status }}
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td class="py-4 px-2 sm:px-4 text-center">
                                             {{ $post->created_at->format('d M Y') }}
                                         </td>
-                                        <td class="py-4 px-2 sm:px-4 text-center">Status</td>
                                         <td class="py-4 px-2 sm:px-4 flex space-x-2 justify-center">
                                             <a href="/posts/1/edit"
-                                                class="inline-flex items-center bg-yellow-500 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full hover:bg-yellow-600 transition duration-200 ease-in-out shadow-md text-xs sm:text-sm">
-                                                <!-- Edit Icon -->
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                    class="h-4 w-4 sm:h-5 sm:w-5 mr-1" viewBox="0 0 20 20"
-                                                    fill="currentColor">
+                                                class="inline-flex items-center bg-yellow-600 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full hover:bg-yellow-500 transition duration-200 ease-in-out shadow-md text-xs sm:text-sm">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                    fill="currentColor" class="size-5 mr-1">
                                                     <path
-                                                        d="M17.414 2.586a2 2 0 010 2.828l-10 10a2 2 0 01-.878.478l-4 1a1 1 0 01-1.225-1.225l1-4a2 2 0 01.478-.878l10-10a2 2 0 012.828 0z" />
+                                                        d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
+                                                    <path
+                                                        d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
                                                 </svg>
                                                 Edit
                                             </a>
                                             <a href="/posts/1/delete"
-                                                class="inline-flex items-center bg-red-500 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full hover:bg-red-600 transition duration-200 ease-in-out shadow-md text-xs sm:text-sm">
-                                                <!-- Delete Icon -->
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                    class="h-4 w-4 sm:h-5 sm:w-5 mr-1" viewBox="0 0 20 20"
-                                                    fill="currentColor">
-                                                    <path
-                                                        d="M6.5 4a1 1 0 00-1 1v1h-1v1h11v-1h-1V5a1 1 0 00-1-1H6.5zM7 9a1 1 0 00-1 1v7a1 1 0 001 1h6a1 1 0 001-1v-7a1 1 0 00-1-1H7z" />
+                                                class="inline-flex items-center bg-red-600 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full hover:bg-red-500 transition duration-200 ease-in-out shadow-md text-xs sm:text-sm">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                    fill="currentColor" class="size-5 mr-1">
+                                                    <path fill-rule="evenodd"
+                                                        d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                                                        clip-rule="evenodd" />
                                                 </svg>
+
                                                 Delete
                                             </a>
                                         </td>
