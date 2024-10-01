@@ -58,5 +58,5 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 
-    Route::resource('dashboard/berita', PostController::class);
+    Route::resource('dashboard/berita', PostController::class)->parameters(['posts' => 'slug']);
 });
