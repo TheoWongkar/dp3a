@@ -70,9 +70,18 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $slug)
     {
-        //
+        $post = Post::where('slug', $slug)->firstOrFail();
+
+        if (!$post) {
+            return view('dashboard.post.index')
+                ->with('error', 'Berita tidak ditemukan');
+        }
+
+        return view('dashboard.post.show', [
+            'post' => $post
+        ]);
     }
 
     /**
