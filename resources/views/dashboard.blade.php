@@ -81,7 +81,8 @@
                                 @foreach ($posts as $post)
                                     <li class="py-2">
                                         <div class="flex items-center justify-between">
-                                            <p class="text-gray-700 text-sm md:text-md">{{ $post->title }}</p>
+                                            <a href="{{ route('berita.show', $post->slug) }}"
+                                                class="text-gray-700 text-sm md:text-md hover:text-blue-500 hover:underline">{{ $post->title }}</a>
                                             <span
                                                 class="text-gray-500 text-xs md:text-sm">{{ $post->updated_at->diffForHumans() }}</span>
                                         </div>
@@ -121,7 +122,8 @@
                         </div>
 
                         <!-- Card Pengumuman Terbit -->
-                        <div class="bg-green-200 p-4 rounded-lg shadow-md hover:bg-green-300 transition duration-300">
+                        <div
+                            class="bg-green p-4 bg-green-200 rounded-lg shadow-md hover:bg-green-300 transition duration-300">
                             <div class="flex items-center">
                                 <div class="p-2 bg-green-600 rounded-full text-white">
                                     <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -155,26 +157,27 @@
                         </div>
                     </div>
 
-                <!-- Aktifitas Berita -->
-                <div class="mt-8">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Aktifitas Berita</h2>
-                    <div class="bg-white shadow rounded-lg p-6">
-                        <ul class="divide-y divide-gray-200">
-                            @foreach ($posts as $post)
-                                <li class="py-4">
-                                    <div class="flex items-center justify-between">
-                                        <p class="text-gray-700">{{ $post->title }}</p>
-                                        <span
-                                            class="text-gray-500 text-sm">{{ $post->updated_at->diffForHumans() }}</span>
-                                    </div>
-                                </li>
-                            @endforeach
-                        </ul>
+                    <!-- Aktifitas Pengumuman -->
+                    <div class="mt-5">
+                        <h2 class="text-xl font-semibold text-gray-800">Aktifitas Pengumuman</h2>
+                        <p class="text-gray-500">Menampilkan aktifitas pengumuman terbaru.</p>
+                        <div class="bg-white shadow rounded-lg p-4 mt-2">
+                            <ul class="divide-y divide-gray-200">
+                                @foreach ($announcements as $announcement)
+                                    <li class="py-2">
+                                        <div class="flex items-center justify-between">
+                                            <a href="{{ route('pengumuman.show', $announcement->slug) }}"
+                                                class="text-gray-700 text-sm md:text-md hover:text-blue-500 hover:underline">{{ $announcement->title }}</a>
+                                            <span
+                                                class="text-gray-500 text-xs md:text-sm">{{ $announcement->updated_at->diffForHumans() }}</span>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 </x-app-layout>
