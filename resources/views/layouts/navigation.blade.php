@@ -81,13 +81,19 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('berita.index')" :active="request()->routeIs('berita*')">
+                {{ __('Berita') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('pengumuman.index')" :active="request()->routeIs('pengumuman*')">
+                {{ __('Pengumuman') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                <div class="font-medium text-base text-gray-400">{{ Auth::user()->name }}</div>
+                <div class="font-medium text-sm text-gray-300">{{ Auth::user()->email }}</div>
             </div>
 
             <div class="mt-3 space-y-1">
