@@ -31,7 +31,7 @@ class AnnouncementController extends Controller
             ->paginate(10);
 
         return view('dashboard.announcement.index', [
-            'posts' => $announcements,
+            'announcements' => $announcements,
             'search' => $search,
             'status' => $status,
         ]);

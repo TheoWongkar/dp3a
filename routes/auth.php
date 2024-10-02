@@ -61,5 +61,5 @@ Route::middleware('auth')->group(function () {
         ->name('logout');
 
     Route::resource('dashboard/berita', PostController::class)->parameters(['posts' => 'slug']);
-    Route::resource('dashboard/berita', AnnouncementController::class)->parameters(['posts' => 'slug']);
+    Route::resource('dashboard/pengumuman', AnnouncementController::class)->parameters(['announcements' => 'slug']);
 });
