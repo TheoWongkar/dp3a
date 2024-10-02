@@ -76,7 +76,7 @@ class AnnouncementController extends Controller
 
         if (!$announcement) {
             return view('dashboard.announcement.index')
-                ->with('error', 'Berita tidak ditemukan');
+                ->with('error', 'Pengumuman tidak ditemukan');
         }
 
         return view('dashboard.announcement.show', [
