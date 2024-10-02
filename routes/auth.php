@@ -12,6 +12,8 @@ use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Dashboard\DashboardController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -61,4 +63,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('dashboard/berita', PostController::class)->parameters(['posts' => 'slug']);
     Route::resource('dashboard/pengumuman', AnnouncementController::class)->parameters(['announcements' => 'slug']);
+
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'post'])->name('dashboard');
 });
