@@ -80,7 +80,8 @@
                             @foreach ($posts as $post)
                                 <li class="py-4">
                                     <div class="flex items-center justify-between">
-                                        <p class="text-gray-700">{{ $post->title }}</p>
+                                        <a href="{{ route('berita.show', $post->slug) }}"
+                                            class="text-gray-700 hover:text-blue-500 hover:underline">{{ $post->title }}</a>
                                         <span
                                             class="text-gray-500 text-sm">{{ $post->updated_at->diffForHumans() }}</span>
                                     </div>

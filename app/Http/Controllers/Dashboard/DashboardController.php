@@ -10,7 +10,7 @@ class DashboardController extends Controller
 {
     public function post()
     {
-        $posts = Post::with('user')->paginate(5);
+        $posts = Post::paginate(5);
         $totalPosts = Post::count();
         $publishedPosts = Post::where('status', 'Terbit')->count();
         $archivedPosts = Post::where('status', 'Arsip')->count();
