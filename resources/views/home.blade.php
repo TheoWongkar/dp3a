@@ -37,7 +37,7 @@
                     <img src="https://via.placeholder.com/800x400" alt="Main Image"
                         class="w-full h-64 md:h-80 object-cover">
                     <div class="p-6">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Lorem Ipsum</h2>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ $post->title }}</h2>
                         <div class="text-gray-500 text-sm mb-4">
                             <span>24hr Ago</span> &bull; <span>Admin</span>
                         </div>
