@@ -16,6 +16,7 @@ class Announcement extends Model
         'slug',
         'image',
         'body',
+        'status',
     ];
 
     public function user()
