@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Announcement;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Dashboard\PostController;
