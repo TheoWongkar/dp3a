@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-100 leading-tight">
-            {{ __('Ubah Berita :') }} <span class="text-blue-200">{{ substr($post->title, 0, 10) }}</span>
+            {{ __('Ubah Berita :') }} <span class="text-blue-200">{{ substr($post->title, 0, 17) }}</span>
         </h2>
     </x-slot>
 
