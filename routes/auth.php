@@ -63,7 +63,4 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('dashboard/berita', PostController::class)->parameters(['posts' => 'slug']);
     Route::resource('dashboard/pengumuman', AnnouncementController::class)->parameters(['announcements' => 'slug']);
-
-    // Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
