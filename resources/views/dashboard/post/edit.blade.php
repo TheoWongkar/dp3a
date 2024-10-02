@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-100 leading-tight">
-            {{ __('Tambah Berita') }}
+            {{ __('Ubah Berita :') }} <span class="text-blue-200">{{ substr($post->slug, 0, 10) }}</span>
         </h2>
     </x-slot>
 
@@ -11,14 +11,16 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-lg rounded-lg p-8">
                 <!-- Form Tambah Berita -->
-                <form action="{{ route('berita.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('berita.update', $post->slug) }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    @method('PUT')
                     <!-- Judul Berita -->
                     <div class="mb-4">
                         <label for="title" class="block text-md font-medium text-gray-700">Judul Berita</label>
                         <input type="text" name="title" id="title" required
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:border focus:border-[#141652]"
-                            placeholder="Masukkan judul berita" value="{{ old('title') }}">
+                            placeholder="Masukkan judul berita"
+                            value="{{ $post->title = old('title') ?? $post->title }}">
 
                         @error('title')
                             <p class="text-red-500 text-md mt-2">{{ $message }}</p>
@@ -31,8 +33,10 @@
                         <select name="status" id="status" required
                             class="text-gray-500 mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:border focus:border-[#141652]">
                             <option selected disabled>Status postingan</option>
-                            <option value="Terbit" {{ old('status') === 'Terbit' ? 'selected' : '' }}>Terbit</option>
-                            <option value="Arsip" {{ old('status') === 'Arsip' ? 'selected' : '' }}>Arsip</option>
+                            <option value="Terbit"
+                                {{ (old('status') ?? $post->status) === 'Terbit' ? 'selected' : '' }}>Terbit</option>
+                            <option value="Arsip" {{ (old('status') ?? $post->status) === 'Arsip' ? 'selected' : '' }}>
+                                Arsip</option>
                         </select>
 
                         @error('status')
@@ -41,7 +45,7 @@
                     </div>
 
                     <!-- Gambar Berita -->
-                    <div x-data="{ imagePreview: null }" class="mb-4">
+                    <div x-data="{ imagePreview: '{{ $post->image ? asset('storage/' . $post->image) : null }}' }" class="mb-4">
                         <label for="image" class="block text-md font-medium text-gray-700 mb-2">Gambar Berita</label>
                         <input id="image" type="file" name="image"
                             class="block w-full text-gray-500 mt-1 border border-gray-300 rounded-md shadow-sm focus:border focus:border-[#141652] file:mr-4 file:py-2.5 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-[#141652] file:text-white hover:file:bg-blue-800 transition ease-in-out duration-200"
@@ -55,20 +59,20 @@
                         <!-- Preview Image -->
                         <div class="mt-4" x-show="imagePreview" style="display: none;">
                             <div class="overflow-auto max-w-full h-64 rounded-md shadow-md border border-gray-300">
-                                <!-- Set a fixed height -->
-                                <img :src="imagePreview" class="w-full h-auto" alt="Image Preview">
+                                <img :src="imagePreview" class="w-full h-auto" alt="Gambar Berita">
                             </div>
                         </div>
+
                         @error('image')
                             <p class="text-red-500 text-md mt-2">{{ $message }}</p>
                         @enderror
                     </div>
 
-
                     <!-- Isi Berita -->
                     <div class="mb-4">
                         <label for="body" class="block text-md font-medium text-gray-700 mb-1">Isi Berita</label>
-                        <input id="body" type="hidden" name="body" value="{{ old('body') }}">
+                        <input id="body" type="hidden" name="body"
+                            value="{{ $post->body = old('body') ?? $post->body }}">
                         <trix-editor
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:border focus:border-[#141652]"
                             input="body"></trix-editor>
@@ -96,7 +100,7 @@
                                 <path
                                     d="M11.47 1.72a.75.75 0 0 1 1.06 0l3 3a.75.75 0 0 1-1.06 1.06l-1.72-1.72V7.5h-1.5V4.06L9.53 5.78a.75.75 0 0 1-1.06-1.06l3-3ZM11.25 7.5V15a.75.75 0 0 0 1.5 0V7.5h3.75a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-9a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3h3.75Z" />
                             </svg>
-                            Tambah Berita
+                            Ubah Berita
                         </button>
                     </div>
                 </form>

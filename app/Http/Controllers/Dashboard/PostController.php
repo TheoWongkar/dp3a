@@ -78,17 +78,36 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $slug)
     {
-        //
+        $post = Post::where('slug', $slug)->firstOrFail();
+        return view('dashboard.post.edit', [
+            'post' => $post
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $slug)
     {
-        //
+        $post = Post::where('slug', $slug)->firstOrFail();
+
+        $validated = $request->validate([
+            'title' => 'required|string|min:5|',
+            'image' => 'nullable|image|file|max:3072',
+            'body' => 'required|string',
+            'status' => 'required|string',
+        ]);
+
+        if ($request->file('image')) {
+            $validated['image'] = $request->file('image')->store('post-images');
+        }
+
+        $post->update($validated);
+
+        return redirect()->route('berita.index')
+            ->with('success', 'Berita berhasil diubah.');
     }
 
     /**
