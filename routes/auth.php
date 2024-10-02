@@ -65,5 +65,5 @@ Route::middleware('auth')->group(function () {
     Route::resource('dashboard/pengumuman', AnnouncementController::class)->parameters(['announcements' => 'slug']);
 
     // Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'post'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
