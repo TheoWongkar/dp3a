@@ -27,24 +27,21 @@
         </div>
     </section>
 
-
     <!-- Section Konten -->
     <section class="container mx-auto px-4 py-10 sm:px-6 lg:px-4">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Semua Postingan -->
+            <!-- 1 Postingan Terbaru -->
             <div class="md:col-span-2">
                 <div class="bg-white rounded-lg shadow-lg border-2 overflow-hidden">
-                    <img src="https://via.placeholder.com/800x400" alt="Main Image"
+                    <img src="{{ asset('storage/' . $post->image) }}" alt="Gambar Berita"
                         class="w-full h-64 md:h-80 object-cover">
                     <div class="p-6">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ $post->title }}</h2>
-                        <div class="text-gray-500 text-sm mb-4">
-                            <span>24hr Ago</span> &bull; <span>Admin</span>
+                        <h2 class="text-2xl font-bold mb-2">{{ $post->title }}</h2>
+                        <div class="text-sm font-medium mb-4">
+                            <span>{{ $post->created_at->diffForHumans() }}</span> &bull;
+                            <span>{{ $post->user->name }}</span>
                         </div>
-                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-                            posuere facilisis velit, eu pulvinar ipsum tempus ac. Lorem ipsum dolor sit amet consectetur
-                            adipisicing elit. Explicabo, consectetur nam. Molestias sed velit delectus fugit quia
-                            necessitatibus laudantium quo!</p>
+                        <p class="font-normal">{!! $post->body !!}</p>
                     </div>
                 </div>
             </div>
@@ -52,54 +49,33 @@
             <!-- Postingan Terbaru -->
             <div class="bg-white rounded-lg border-2 shadow-lg p-6 flex flex-col space-y-4"
                 style="max-height: 500px; overflow-y: auto;">
-                <h3 class="text-xl font-bold mb-4">Berita Terbaru</h3>
+                <h3 class="text-xl font-bold mb-2">Berita Terbaru</h3>
                 <div class="space-y-4">
-                    <div class="flex items-center">
-                        <img src="https://via.placeholder.com/100" alt="Thumbnail"
-                            class="w-16 h-16 object-cover rounded-lg mr-4">
-                        <div>
-                            <h4 class="text-md font-semibold">Lorem Ipsum</h4>
-                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia, inventore.</p>
+                    @foreach ($posts as $post)
+                        <div class="flex items-center">
+                            <img src="{{ asset('storage/' . $post->image) }}" alt="Thumbnail Berita"
+                                class="w-16 h-16 object-cover rounded-lg mr-4">
+                            <div>
+                                <h4 class="text-md font-semibold">{{ $post->title }}</h4>
+                                <p>{!! substr($post->body, 0, 50) !!}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex items-center">
-                        <img src="https://via.placeholder.com/100" alt="Thumbnail"
-                            class="w-16 h-16 object-cover rounded-lg mr-4">
-                        <div>
-                            <h4 class="text-md font-semibold">Lorem Ipsum</h4>
-                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia, inventore.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center">
-                        <img src="https://via.placeholder.com/100" alt="Thumbnail"
-                            class="w-16 h-16 object-cover rounded-lg mr-4">
-                        <div>
-                            <h4 class="text-md font-semibold">Lorem Ipsum</h4>
-                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia, inventore.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center">
-                        <img src="https://via.placeholder.com/100" alt="Thumbnail"
-                            class="w-16 h-16 object-cover rounded-lg mr-4">
-                        <div>
-                            <h4 class="text-md font-semibold">Lorem Ipsum</h4>
-                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia, inventore.</p>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
     </section>
+
 
     <!-- Section Pantau -->
     <section class="container bg-gray-300 max-w-full">
         <div class="px-4 py-10 sm:px-6 lg:px-14 rounded-lg grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Text kiri -->
             <div class="flex flex-col justify-center">
-                <h2 class="text-2xl lg:text-3xl font-bold text-gray-800 mb-4 leading-snug">
+                <h2 class="text-2xl lg:text-3xl font-bold mb-4 leading-snug">
                     Pantau Perkembangan Laporan Secara Real-Time!
                 </h2>
-                <p class="text-gray-700 mb-6">
+                <p class="mb-6">
                     Angka-angka ini bukan hanya data, mereka adalah cerita nyata di balik setiap laporan. Dengan
                     statistik laporan ini, kita bisa merespon dengan cepat dan tepat, menyesuaikan langkah, dan
                     memastikan perlindungan yang lebih baik bagi anak-anak di seluruh negeri. Ambil langkah ini untuk
@@ -152,14 +128,14 @@
             <!-- Prev Button -->
             <button @click="activeSlide = activeSlide === 0 ? slides.length - 1 : activeSlide - 1" @focus="stopAutoplay"
                 @blur="startAutoplay" aria-label="Previous Slide"
-                class="absolute left-0 top-1/2 transform -translate-y-1/2 text-2xl text-gray-700 bg-white rounded-full shadow-lg p-2 focus:outline-none">
+                class="absolute left-0 top-1/2 transform -translate-y-1/2 text-2xl bg-white rounded-full shadow-lg p-2 focus:outline-none">
                 &#10094;
             </button>
 
             <!-- Next Button -->
             <button @click="activeSlide = activeSlide === slides.length - 1 ? 0 : activeSlide + 1" @focus="stopAutoplay"
                 @blur="startAutoplay" aria-label="Next Slide"
-                class="absolute right-0 top-1/2 transform -translate-y-1/2 text-2xl text-gray-700 bg-white rounded-full shadow-lg p-2 focus:outline-none">
+                class="absolute right-0 top-1/2 transform -translate-y-1/2 text-2xl bg-white rounded-full shadow-lg p-2 focus:outline-none">
                 &#10095;
             </button>
 
