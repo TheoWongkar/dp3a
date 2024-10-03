@@ -41,7 +41,7 @@
                             <span>{{ $post->created_at->diffForHumans() }}</span> &bull;
                             <span>{{ $post->user->name }}</span>
                         </div>
-                        <p class="font-normal">{!! $post->body !!}</p>
+                        <p class="font-normal">{!! substr($post->body, 0, 500) !!}</p>
                     </div>
                 </div>
             </div>
@@ -54,10 +54,10 @@
                     @foreach ($posts as $post)
                         <div class="flex items-center">
                             <img src="{{ asset('storage/' . $post->image) }}" alt="Thumbnail Berita"
-                                class="w-16 h-16 object-cover rounded-lg mr-4">
+                                class="w-16 h-16 object-cover rounded-lg mr-4 aspect-square">
                             <div>
-                                <h4 class="text-md font-semibold">{{ $post->title }}</h4>
-                                <p>{!! substr($post->body, 0, 50) !!}</p>
+                                <h4 class="text-md font-semibold">{{ substr($post->title, 0, 15) }}</h4>
+                                <p>{{ substr($post->body, 0, 50) }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -65,7 +65,6 @@
             </div>
         </div>
     </section>
-
 
     <!-- Section Pantau -->
     <section class="container bg-gray-300 max-w-full">

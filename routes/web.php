@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/berita', [PostController::class, 'index']);
+Route::get('/berita/post/{slug}', [PostController::class, 'showPost']);
 
 Route::get('/status-laporan', function () {
     return view('statuses');
