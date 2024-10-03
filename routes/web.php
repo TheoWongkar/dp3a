@@ -16,7 +16,7 @@ Route::get('/status-laporan', function () {
     return view('statuses');
 });
 
-Route::get('/laporkan', [ReportController::class, 'create']);
+Route::get('/laporkan', [ReportController::class, 'create'])->name('reports');
 Route::post('/laporkan', [ReportController::class, 'store']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
