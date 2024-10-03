@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\Dashboard\DashboardController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dashboard\DashboardController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -15,9 +16,8 @@ Route::get('/status-laporan', function () {
     return view('statuses');
 });
 
-Route::get('/laporkan', function () {
-    return view('reports');
-});
+Route::get('/laporkan', [ReportController::class, 'create']);
+Route::post('/laporkan', [ReportController::class, 'store']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])->name('dashboard');

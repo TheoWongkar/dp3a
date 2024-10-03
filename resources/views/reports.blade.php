@@ -10,64 +10,76 @@
 
         <div class="bg-white w-full max-w-6xl p-8 rounded-md shadow-md" x-data="{ step: 1 }">
             <div>
-                <form action="#" method="POST" enctype="multipart/form-data">
+                <form action="/laporkan" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <!-- Step 1: Laporan Kekerasan -->
                     <div x-show="step === 1" x-cloak>
                         <h2 class="text-lg font-bold mb-6">Formulir Laporan Kekerasan</h2>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                             <!-- Jenis Kekerasan -->
-                            <label for="jenis-kekerasan" class="block text-sm font-medium text-left">
+                            <label for="violence_category" class="block text-sm font-medium text-left">
                                 Jenis Kekerasan <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-2">
-                                <select id="jenis-kekerasan" name="jenis-kekerasan"
+                                <select id="violence_category" name="violence_category"
                                     class="w-full bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                                     <option selected disabled>Pilih jenis kekerasan</option>
-                                    <option>Kekerasan fisik</option>
-                                    <option>Kekerasan psikis</option>
-                                    <option>Kekerasan seksual</option>
-                                    <option>Penelantaran anak</option>
-                                    <option>Eksploitasi anak</option>
+                                    <option>Kekerasan Fisik</option>
+                                    <option>Kekerasan Psikis</option>
+                                    <option>Kekerasan Seksual</option>
+                                    <option>Penelantaran Anak</option>
+                                    <option>Eksploitasi Anak</option>
                                 </select>
                             </div>
 
                             <!-- Deskripsi Insiden -->
-                            <label for="deskripsi" class="block text-sm font-medium text-left">
+                            <label for="description" class="block text-sm font-medium text-left">
                                 Deskripsi Insiden <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-2">
-                                <textarea id="deskripsi" name="deskripsi" rows="4"
+                                <textarea id="description" name="description" rows="4"
                                     class="w-full bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400"></textarea>
                             </div>
 
                             <!-- Tanggal Kejadian -->
-                            <label for="tanggal-kejadian" class="block text-sm font-medium text-left">
+                            <label for="date" class="block text-sm font-medium text-left">
                                 Tanggal Kejadian <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-2">
-                                <input type="date" id="tanggal-kejadian" name="tanggal-kejadian"
+                                <input type="date" id="date" name="date"
                                     class="w-full bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
 
                             <!-- Tempat Kejadian -->
-                            <label for="tempat-kejadian" class="block text-sm font-medium text-left">
+                            <label for="scene" class="block text-sm font-medium text-left">
                                 Tempat Kejadian <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-2">
-                                <textarea id="tempat-kejadian" name="tempat-kejadian" rows="4"
+                                <textarea id="scene" name="scene" rows="4"
                                     class="w-full bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400"></textarea>
                             </div>
 
-                            <!-- Supporting Evidence -->
-                            <label for="bukti-pendukung" class="block text-sm font-medium text-left">
+                            <!-- Bukti Pendukung -->
+                            <label for="evidence" class="block text-sm font-medium text-left">
                                 Bukti Pendukung
                             </label>
                             <div class="md:col-span-1 mb-5">
-                                <div x-data="{ files: null }"
-                                    class="border-4 p-6 text-center bg-white rounded-md border-[#DCE8FF]">
-                                    <input type="file" id="bukti-pendukung" name="bukti-pendukung" class="hidden"
-                                        accept="image/png, image/jpeg" x-ref="file"
-                                        x-on:change="files = $event.target.files">
+                                <div x-data="{ files: null, isDropping: false, previewUrl: null }" class="border-4 p-6 text-center bg-white rounded-md"
+                                    :class="{ 'border-blue-500': isDropping, 'border-[#DCE8FF]': !isDropping }"
+                                    x-on:dragover.prevent="isDropping = true"
+                                    x-on:dragleave.prevent="isDropping = false"
+                                    x-on:drop.prevent="
+                                        isDropping = false;
+                                        files = $event.dataTransfer.files;
+                                        previewUrl = URL.createObjectURL(files[0]);
+                                    ">
+                                    <input type="file" id="evidence" name="evidence" class="hidden"
+                                        accept="image/png, image/jpeg, image/jpg" x-ref="file"
+                                        x-on:change="
+                                            files = $event.target.files;
+                                            previewUrl = URL.createObjectURL(files[0]);
+                                        ">
+
                                     <div x-on:click="$refs.file.click()" class="cursor-pointer inline">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                             class="size-8 mx-auto text-gray-500 inline">
@@ -81,6 +93,15 @@
                                         <p class="text-xs text-red-500 mt-1">JPG/PNG</p>
                                         <p class="text-xs text-red-500 mt-1">Ukuran File 40 KB - 100 KB</p>
                                     </div>
+
+                                    <!-- Image Preview -->
+                                    <template x-if="previewUrl">
+                                        <div class="mt-4">
+                                            <p class="text-gray-500 font-semibold mb-2">Image Preview:</p>
+                                            <img :src="previewUrl" alt="Image Preview"
+                                                class="w-48 h-48 object-cover mx-auto rounded-md">
+                                        </div>
+                                    </template>
                                 </div>
                             </div>
                         </div>
@@ -91,31 +112,31 @@
                         <h2 class="text-lg font-bold mb-6">Formulir Data Korban</h2>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                             <!-- Nama Korban -->
-                            <label for="nama-korban" class="block text-sm font-medium text-left">
+                            <label for="victim_name" class="block text-sm font-medium text-left">
                                 Nama Korban <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-2">
-                                <input type="text" id="nama-korban" name="nama-korban"
+                                <input type="text" id="victim_name" name="victim_name"
                                     placeholder="Masukkan nama korban"
                                     class="w-full bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
 
                             <!-- Usia Korban -->
-                            <label for="usia-korban" class="block text-sm font-medium text-left">
+                            <label for="victim_age" class="block text-sm font-medium text-left">
                                 Usia Korban <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-2">
-                                <input type="number" id="usia-korban" name="usia-korban"
+                                <input type="number" id="victim_age" name="victim_age"
                                     placeholder="Masukkan usia korban"
                                     class="w-full bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
 
                             <!-- Jenis Kelamin Korban -->
-                            <label for="usia-korban" class="block text-sm font-medium text-left">
+                            <label for="victim_gender" class="block text-sm font-medium text-left">
                                 Jenis Kelamin Korban <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-2">
-                                <select id="jenis-kekerasan" name="jenis-kekerasan"
+                                <select id="victim_gender" name="victim_gender"
                                     class="w-full bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                                     <option selected disabled>Pilih jenis kelamin korban</option>
                                     <option value="Laki-Laki">Laki-Laki</option>
@@ -123,12 +144,12 @@
                                 </select>
                             </div>
 
-                            <!-- Alamat Korban -->
-                            <label for="alamat-korban" class="block text-sm font-medium text-left">
-                                Deskripsi Tambahan Mengenai Korban <span class="text-red-500">*</span>
+                            <!-- Deskripsi Tambahan Mengenai Korban -->
+                            <label for="victim_description" class="block text-sm font-medium text-left">
+                                Deskripsi Tambahan Mengenai Korban
                             </label>
                             <div class="md:col-span-2">
-                                <textarea id="alamat-korban" name="alamat-korban" rows="4"
+                                <textarea id="victim_description" name="victim_description" rows="4"
                                     class="w-full bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400"></textarea>
                             </div>
                         </div>
@@ -139,31 +160,31 @@
                         <h2 class="text-lg font-bold mb-6">Formulir Data Pelaku</h2>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                             <!-- Nama Pelaku -->
-                            <label for="name" class="block text-sm font-medium text-left">
+                            <label for="perpetrator_name" class="block text-sm font-medium text-left">
                                 Nama Pelaku
                             </label>
                             <div class="md:col-span-2">
-                                <input type="text" id="nama-pelaku" name="nama-pelaku"
+                                <input type="text" id="perpetrator_name" name="perpetrator_name"
                                     placeholder="Masukkan nama pelaku"
                                     class="w-full bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
 
                             <!-- Usia Pelaku -->
-                            <label for="usia-pelaku" class="block text-sm font-medium text-left">
+                            <label for="perpetrator_age" class="block text-sm font-medium text-left">
                                 Usia Pelaku
                             </label>
                             <div class="md:col-span-2">
-                                <input type="number" id="usia-pelaku" name="usia-pelaku"
+                                <input type="number" id="perpetrator_age" name="perpetrator_age"
                                     placeholder="Masukkan usia pelaku"
                                     class="w-full bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
 
                             <!-- Hubungan Antara Pelaku Dengan Korban -->
-                            <label for="usia-korban" class="block text-sm font-medium text-left">
+                            <label for="relationship_between" class="block text-sm font-medium text-left">
                                 Hubungan Pelaku Dengan Korban
                             </label>
                             <div class="md:col-span-2">
-                                <select id="jenis-kekerasan" name="jenis-kekerasan"
+                                <select id="relationship_between" name="relationship_between"
                                     class="w-full bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                                     <option selected>Pilih hubungan pelaku dengan korban</option>
                                     <option value="Laki-Laki">Orang Tua</option>
@@ -175,11 +196,11 @@
                             </div>
 
                             <!-- Deskripsi Tambahan Mengenai Pelaku -->
-                            <label for="alamat-korban" class="block text-sm font-medium text-left">
+                            <label for="perpetrator_description" class="block text-sm font-medium text-left">
                                 Deskripsi Tambahan Mengenai Pelaku
                             </label>
                             <div class="md:col-span-2">
-                                <textarea id="alamat-korban" name="alamat-korban" rows="4"
+                                <textarea id="perpetrator_description" name="perpetrator_description" rows="4"
                                     class="w-full bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400"></textarea>
                             </div>
                         </div>
@@ -188,41 +209,43 @@
                     <!-- Step 4: Data Pelapor -->
                     <div x-show="step === 4" x-cloak>
                         <h2 class="text-lg font-bold mb-6">Formulir Data Pelapor</h2>
-                        <!-- Nama Pelaku -->
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                             <!-- Whatsapp -->
-                            <label for="name" class="block text-sm font-medium text-left">
+                            <label for="reporter_whatsapp" class="block text-sm font-medium text-left">
                                 Whatsapp
                             </label>
                             <div class="md:col-span-2">
-                                <input type="text" id="nama-pelaku" name="nama-pelaku" placeholder="08XXXXXXXXXX"
+                                <input type="text" id="reporter_whatsapp" name="reporter_whatsapp"
+                                    placeholder="08XXXXXXXXXX"
                                     class="w-full bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
 
                             <!-- Telegram -->
-                            <label for="name" class="block text-sm font-medium text-left">
+                            <label for="reporter_telegram" class="block text-sm font-medium text-left">
                                 Telegram
                             </label>
                             <div class="md:col-span-2">
-                                <input type="text" id="nama-pelaku" name="nama-pelaku" placeholder="08XXXXXXXXXX"
+                                <input type="text" id="reporter_telegram" name="reporter_telegram"
+                                    placeholder="08XXXXXXXXXX"
                                     class="w-full bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
 
                             <!-- Instagram -->
-                            <label for="name" class="block text-sm font-medium text-left">
+                            <label for="reporter_instagram" class="block text-sm font-medium text-left">
                                 Instagram
                             </label>
                             <div class="md:col-span-2">
-                                <input type="text" id="nama-pelaku" name="nama-pelaku" placeholder="@xxx123"
+                                <input type="text" id="reporter_instagram" name="reporter_instagram"
+                                    placeholder="@xxx123"
                                     class="w-full bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
 
                             <!-- Email -->
-                            <label for="name" class="block text-sm font-medium text-left">
+                            <label for="reporter_email" class="block text-sm font-medium text-left">
                                 Instagram
                             </label>
                             <div class="md:col-span-2">
-                                <input type="text" id="nama-pelaku" name="nama-pelaku"
+                                <input type="text" id="reporter_email" name="reporter_email"
                                     placeholder="xxxxx@email.com"
                                     class="w-full bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
