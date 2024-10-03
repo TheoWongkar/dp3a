@@ -1,7 +1,7 @@
 <x-guest-layout>
 
     <!-- Section Konten -->
-    <section class="container mx-auto px-4 py-10 sm:px-6 lg:px-4">
+    <section class="container mx-auto px-4 pt-24 pb-10 sm:px-6 lg:px-4">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Semua Postingan -->
             <div class="md:col-span-2 space-y-8">

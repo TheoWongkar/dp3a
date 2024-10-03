@@ -2,7 +2,7 @@
 
     <!-- Section Laporkan -->
     <div
-        class="bg-[#E9F0FF] min-h-screen flex flex-col items-center justify-start py-10 px-4 md:px-8 lg:px-16 space-y-6">
+        class="bg-[#E9F0FF] min-h-screen flex flex-col items-center justify-start pt-24 pb-10 px-4 md:px-8 lg:px-16 space-y-6">
         <!-- Header Container -->
         <div class="bg-white w-full max-w-6xl py-4 px-6 rounded-md">
             <h1 class="text-lg font-bold">LAPORAN KEKERASAN</h1>
