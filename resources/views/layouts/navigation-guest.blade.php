@@ -1,23 +1,24 @@
 <div x-data="{
-    isNavbarVisible: false, // Initially hidden at the top
-    isSidebarOpen: false,
-    lastScrollTop: 0,
-    handleScroll() {
-        const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-        // Show navbar when not at the top
-        if (currentScrollTop > 0) {
-            this.isNavbarVisible = true; // Show the navbar when scrolling down
-        } else {
-            this.isNavbarVisible = false; // Hide the navbar when at the top
-        }
-
-        this.lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // For mobile or negative scrolling
-    }
+    @if (request()->routeIs('home')) isNavbarVisible: false,
+        isSidebarOpen: false,
+        lastScrollTop: 0,
+        handleScroll() {
+            const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+            if (currentScrollTop > 0) {
+                this.isNavbarVisible = true;
+            } else {
+                this.isNavbarVisible = false;
+            }
+    
+            this.lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+        } 
+    @else
+    isSidebarOpen: false, @endif
 }" @scroll.window="handleScroll" class="relative">
 
     <!-- Navbar -->
-    <header x-show="isNavbarVisible" x-cloak
+    <header @if (request()->routeIs('home')) x-show="isNavbarVisible" x-cloak @endif
         class="fixed w-full bg-[#141652] px-3 py-4 md:px-8 transition-transform duration-500 z-20"
         x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 -translate-y-full"
         x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in-out duration-500"
@@ -42,7 +43,7 @@
 
             <div class="hidden lg:flex items-center space-x-6">
                 <nav class="flex space-x-6 text-white">
-                    <a href="/" class="hover:border-b border-white">Beranda</a>
+                    <a href="/" class="hover:border-b border-white ">Beranda</a>
                     <a href="/berita" class="hover:border-b border-white">Berita</a>
                     <a href="/status-laporan" class="hover:border-b border-white">Cek Status Laporan</a>
                 </nav>
@@ -78,11 +79,11 @@
             </button>
         </div>
         <nav class="flex flex-col space-y-4 text-[#141652]">
-            <a href="#" class="font-semibold hover:text-[#708CFF]">Beranda</a>
-            <a href="#" class="font-semibold hover:text-[#708CFF]">Berita</a>
-            <a href="#" class="font-semibold hover:text-[#708CFF]">Cek Status Laporan</a>
+            <a href="/" class="font-semibold hover:text-[#708CFF]">Beranda</a>
+            <a href="/berita" class="font-semibold hover:text-[#708CFF]">Berita</a>
+            <a href="/status-laporan" class="font-semibold hover:text-[#708CFF]">Cek Status Laporan</a>
             <a href="#" class="font-semibold hover:text-[#708CFF]">Chat Dengan AI</a>
-            <a href="#" class="font-semibold hover:text-[#708CFF]">Laporkan Kekerasan</a>
+            <a href="/laporkan" class="font-semibold hover:text-[#708CFF]">Laporkan Kekerasan</a>
             @if (Route::has('login'))
                 @auth
                     <a href="{{ url('/dashboard') }}"
