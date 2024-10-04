@@ -31,38 +31,62 @@
     <section class="container mx-auto px-4 py-10 sm:px-6 lg:px-4">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- 1 Postingan Terbaru -->
-            <div class="md:col-span-2">
-                <div class="bg-white rounded-lg shadow-lg border-2 overflow-hidden">
-                    <img src="{{ asset('storage/' . $post->image) }}" alt="Gambar Berita"
-                        class="w-full h-64 md:h-80 object-cover">
-                    <div class="p-6">
-                        <h2 class="text-2xl font-bold mb-2">{{ $post->title }}</h2>
-                        <div class="text-sm font-medium mb-4">
-                            <span>{{ $post->created_at->diffForHumans() }}</span> &bull;
-                            <span>{{ $post->user->name }}</span>
+            @if ($posts->count())
+                <div class="md:col-span-2">
+                    <div class="bg-white rounded-lg shadow-lg border-2 overflow-hidden">
+                        <img src="{{ asset('storage/' . $post->image) }}" alt="Gambar Berita"
+                            class="w-full h-64 md:h-80 object-cover">
+                        <div class="p-6">
+                            <h2 class="text-2xl font-bold mb-2">{{ $post->title }}</h2>
+                            <div class="text-sm font-medium mb-4">
+                                <span>{{ $post->created_at->diffForHumans() }}</span> &bull;
+                                <span>{{ $post->user->name }}</span>
+                            </div>
+                            <p class="font-normal">{!! substr($post->body, 0, 500) !!}</p>
                         </div>
-                        <p class="font-normal">{!! substr($post->body, 0, 500) !!}</p>
                     </div>
                 </div>
-            </div>
+            @else
+                <div class="md:col-span-2">
+                    <div class="bg-white rounded-lg shadow-lg border-2 overflow-hidden">
+                        <div class="p-6">
+                            <h2 class="text-2xl font-bold mb-2">Belum ada berita.</h2>
+                        </div>
+                    </div>
+                </div>
+            @endif
 
             <!-- Postingan Terbaru -->
-            <div class="bg-white rounded-lg border-2 shadow-lg p-6 flex flex-col space-y-4"
-                style="max-height: 500px; overflow-y: auto;">
-                <h3 class="text-xl font-bold mb-2">Berita Terbaru</h3>
-                <div class="space-y-4">
-                    @foreach ($posts as $post)
+            @if ($posts->count())
+                <div class="bg-white rounded-lg border-2 shadow-lg p-6 flex flex-col space-y-4"
+                    style="max-height: 500px; overflow-y: auto;">
+                    <h3 class="text-xl font-bold mb-2">Berita Terbaru</h3>
+                    <div class="space-y-4">
+                        @foreach ($posts as $post)
+                            <div class="flex items-center">
+                                <img src="{{ asset('storage/' . $post->image) }}" alt="Thumbnail Berita"
+                                    class="w-16 h-16 object-cover rounded-lg mr-4 aspect-square">
+                                <div>
+                                    <h4 class="text-md font-semibold">{{ substr($post->title, 0, 15) }}</h4>
+                                    <p>{{ substr($post->body, 0, 50) }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @else
+                <div class="bg-white rounded-lg border-2 shadow-lg p-6 flex flex-col space-y-4"
+                    style="max-height: 500px; overflow-y: auto;">
+                    <h3 class="text-xl font-bold mb-2">Berita Terbaru</h3>
+                    <div class="space-y-4">
                         <div class="flex items-center">
-                            <img src="{{ asset('storage/' . $post->image) }}" alt="Thumbnail Berita"
-                                class="w-16 h-16 object-cover rounded-lg mr-4 aspect-square">
                             <div>
-                                <h4 class="text-md font-semibold">{{ substr($post->title, 0, 15) }}</h4>
-                                <p>{{ substr($post->body, 0, 50) }}</p>
+                                <h4 class="text-md font-semibold">Belum ada berita.</h4>
                             </div>
                         </div>
-                    @endforeach
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </section>
 
