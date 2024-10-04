@@ -62,6 +62,8 @@ class ReportController extends Controller
 
         if ($request->file('evidence')) {
             $validated['evidence'] = $request->file('evidence')->store('evidence-images');
+        } else {
+            $validated['evidence'] = null;
         }
 
         $ticket = Report::generateTicketNumber();

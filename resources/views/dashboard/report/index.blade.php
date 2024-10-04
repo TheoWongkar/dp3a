@@ -9,21 +9,22 @@
     <div class="py-12 bg-gray-50">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-lg rounded-lg p-8">
-                <div class="flex flex-col md:flex-row justify-between items-center mb-6 space-y-4 md:space-y-0">
-                    <!-- Cari Berita -->
+                <div class="flex flex-col md:flex-row justify-end items-center mb-6 space-y-4 md:space-y-0">
+                    <!-- Cari Laporan -->
                     <div class="flex space-x-2 w-full md:w-1/3">
-                        <form action="{{ route('berita.index') }}" method="GET" class="flex w-full">
+                        <form action="{{ route('laporan.index') }}" method="GET" class="flex w-full">
                             <select name="status"
                                 class="bg-[#141652] text-white rounded-l-full px-4 py-2 border border-[#141652] focus:ring-0 focus:border-blue-800">
                                 <option value="">Status</option>
-                                <option value="Terbit">Terbit
+                                <option value="Diajukan" {{ $status === 'Diajukan' ? 'selected' : '' }}>Diajukan
+                                <option value="Diproses" {{ $status === 'Diproses' ? 'selected' : '' }}>Diproses
                                 </option>
-                                <option value="Arsip">Arsip
+                                <option value="Selesai" {{ $status === 'Selesai' ? 'selected' : '' }}>Selesai
                                 </option>
                             </select>
-                            <input type="text" name="search" value=""
+                            <input type="text" name="search" value="{{ $search }}"
                                 class=" px-4 py-2 w-full border border-[#141652] focus:ring-0 focus:border-blue-800"
-                                placeholder="Cari berita..." autocomplete="off" autofocus />
+                                placeholder="Cari laporan..." autocomplete="off" autofocus />
                             <button type="submit"
                                 class="bg-[#141652] hover:bg-blue-800 text-white rounded-r-full px-4 py-2 flex items-center transition duration-200">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -36,15 +37,6 @@
                         </form>
                     </div>
                 </div>
-
-                <!-- Pesan Berhasil -->
-                @if (session('success'))
-                    <div class="bg-green-100 border border-green-500 text-green-800 px-4 py-3 rounded relative mb-3"
-                        role="alert">
-                        <strong class="font-bold">Berhasil!</strong>
-                        <span class="block sm:inline">{{ session('success') }}</span>
-                    </div>
-                @endif
 
                 <!-- Tabel Berita -->
                 <div class="overflow-x-auto">
@@ -80,7 +72,7 @@
                                         <td class="py-4 px-2 sm:px-4">{{ $report->violence_category }}</td>
                                         @if ($report->latestStatus)
                                             <td class="py-4 px-2 sm:px-4 text-center">
-                                                @if ($report->latestStatus->status == 'Pending')
+                                                @if ($report->latestStatus->status == 'Diajukan')
                                                     <span
                                                         class="inline-block bg-red-600 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full hover:bg-red-500 transition duration-200 ease-in-out shadow-md text-xs sm:text-sm">
                                                         {{ $report->latestStatus->status }}
@@ -136,7 +128,7 @@
                 @else
                     <div class="flex flex-col items-center justify-center h-36">
                         <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-                            <h1 class="text-xl font-bold text-red-600">Maaf, postingan tidak ada</h1>
+                            <h1 class="text-xl font-bold text-red-600">Maaf, laporan tidak ada</h1>
                             <p class="mt-2 text-gray-600">Silakan cek kembali nanti!</p>
                         </div>
                     </div>

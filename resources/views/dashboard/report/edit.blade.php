@@ -14,7 +14,7 @@
 
                     <div class="shadow-lg p-4 mt-6 rounded-lg">
                         <!-- Informasi Laporan -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-7">
                             <div>
                                 <h2 class="text-xl font-semibold text-gray-800">Informasi Laporan</h2>
                                 <div class="mt-4 space-y-3">
@@ -137,6 +137,15 @@
                     <h2 class="text-2xl font-bold text-gray-800 mt-6 border-b-2 pb-2 border-gray-300">Histori Status
                         Laporan</h2>
                     <div class="mt-4 space-y-4">
+                        <!-- Pesan Berhasil -->
+                        @if (session('success'))
+                            <div class="bg-green-100 border border-green-500 text-green-800 px-4 py-3 rounded relative mb-3"
+                                role="alert">
+                                <strong class="font-bold">Berhasil!</strong>
+                                <span class="block sm:inline">{{ session('success') }}</span>
+                            </div>
+                        @endif
+
                         @foreach ($report->status as $status)
                             <div
                                 class="bg-white rounded-lg p-5 shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out transform hover:-translate-y-1">
