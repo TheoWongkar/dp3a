@@ -21,6 +21,9 @@
                     <x-nav-link :href="route('pengumuman.index')" :active="request()->routeIs('pengumuman*')">
                         {{ __('Pengumuman') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('laporan.index')" :active="request()->routeIs('laporan*')">
+                        {{ __('Laporan') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -89,6 +92,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('pengumuman.index')" :active="request()->routeIs('pengumuman*')">
                 {{ __('Pengumuman') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('laporan.index')" :active="request()->routeIs('laporan*')">
+                {{ __('Laporan') }}
             </x-responsive-nav-link>
         </div>
 

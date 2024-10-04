@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Report extends Model
 {
@@ -21,6 +22,16 @@ class Report extends Model
         'scene',
         'evidence',
     ];
+
+    public static function generateTicketNumber()
+    {
+        do {
+            // Membuat nomor tiket acak
+            $ticketNumber = 'TKT-' . strtoupper(Str::random(8)); // Misalnya: TKT-ABC12345
+        } while (self::where('ticket_number', $ticketNumber)->exists());
+
+        return $ticketNumber;
+    }
 
     public function user()
     {
@@ -45,5 +56,10 @@ class Report extends Model
     public function status()
     {
         return $this->hasMany(Status::class);
+    }
+
+    public function latestStatus()
+    {
+        return $this->hasOne(Status::class)->latest('created_at');
     }
 }

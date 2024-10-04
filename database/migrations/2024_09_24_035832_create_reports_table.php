@@ -41,7 +41,7 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->string('ticket_number');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->foreignId('victim_id')->constrained('victims')->onDelete('cascade');
             $table->foreignId('perpetrator_id')->constrained('perpetrators')->onDelete('cascade');
             $table->foreignId('reporter_id')->constrained('reporters')->onDelete('cascade');
@@ -49,15 +49,15 @@ return new class extends Migration
             $table->string('description');
             $table->date('date');
             $table->string('scene');
-            $table->string('evidence');
+            $table->string('evidence')->nullable();
             $table->timestamps();
         });
 
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('report_id')->constrained('reports')->onDelete('cascade');
-            $table->string('status')->default('Pending');
-            $table->string('description')->default('Laporan berhasil dibuat');
+            $table->string('status')->default('Diajukan');
+            $table->string('description')->default('Laporan telah diajukan oleh pelapor.');
             $table->timestamps();
         });
     }

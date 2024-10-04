@@ -13,6 +13,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\ReportController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::middleware('guest')->group(function () {
@@ -63,4 +64,5 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('dashboard/berita', PostController::class)->parameters(['posts' => 'slug']);
     Route::resource('dashboard/pengumuman', AnnouncementController::class)->parameters(['announcements' => 'slug']);
+    Route::resource('dashboard/laporan', ReportController::class)->parameters(['reports' => 'ticket_number']);
 });
