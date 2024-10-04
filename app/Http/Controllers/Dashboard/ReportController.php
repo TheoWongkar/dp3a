@@ -11,12 +11,19 @@ class ReportController extends Controller
 {
     public function index(Request $request)
     {
-        $reports = Report::with('latestStatus')->get();
+        $reports = Report::with('latestStatus')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
         return view('dashboard.report.index', compact('reports'));
     }
 
-    public function show(string $ticket_number)
+    public function edit(string $ticket_number)
     {
-        $status = Status::where('ticket_number', $ticket_number)->firstOrFail();
+        $report = Report::with('status')->where('ticket_number', $ticket_number)->firstOrFail();
+
+        return view('dashboard.report.edit', [
+            'report' => $report,
+        ]);
     }
 }

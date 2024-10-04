@@ -56,8 +56,8 @@ return new class extends Migration
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('report_id')->constrained('reports')->onDelete('cascade');
-            $table->string('status')->default('Pending');
-            $table->string('description')->default('Laporan berhasil dibuat');
+            $table->string('status')->default('Diajukan');
+            $table->string('description')->default('Laporan telah diajukan oleh pelapor.');
             $table->timestamps();
         });
     }

@@ -64,5 +64,5 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('dashboard/berita', PostController::class)->parameters(['posts' => 'slug']);
     Route::resource('dashboard/pengumuman', AnnouncementController::class)->parameters(['announcements' => 'slug']);
-    Route::resource('dashboard/laporan', ReportController::class);
+    Route::resource('dashboard/laporan', ReportController::class)->parameters(['reports' => 'ticket_number']);
 });

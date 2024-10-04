@@ -21,7 +21,7 @@
                                 <option value="Arsip">Arsip
                                 </option>
                             </select>
-                            <input type="text" name="search" value="#"
+                            <input type="text" name="search" value=""
                                 class=" px-4 py-2 w-full border border-[#141652] focus:ring-0 focus:border-blue-800"
                                 placeholder="Cari berita..." autocomplete="off" autofocus />
                             <button type="submit"
@@ -82,6 +82,11 @@
                                             <td class="py-4 px-2 sm:px-4 text-center">
                                                 @if ($report->latestStatus->status == 'Pending')
                                                     <span
+                                                        class="inline-block bg-red-600 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full hover:bg-red-500 transition duration-200 ease-in-out shadow-md text-xs sm:text-sm">
+                                                        {{ $report->latestStatus->status }}
+                                                    </span>
+                                                @elseif($report->latestStatus->status == 'Diproses')
+                                                    <span
                                                         class="inline-block bg-orange-600 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full hover:bg-orange-500 transition duration-200 ease-in-out shadow-md text-xs sm:text-sm">
                                                         {{ $report->latestStatus->status }}
                                                     </span>
@@ -97,7 +102,7 @@
                                     {{ $report->created_at->format('d M Y') }}
                                 </td>
                                 <td class="py-4 px-2 sm:px-4 flex space-x-2 justify-center">
-                                    <a href="#"
+                                    <a href="{{ route('laporan.edit', $report->ticket_number) }}"
                                         class="inline-flex items-center bg-blue-600 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full hover:bg-blue-500 transition duration-200 ease-in-out shadow-md text-xs sm:text-sm">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                             class="size-4 mr-1">
@@ -107,17 +112,6 @@
                                                 clip-rule="evenodd" />
                                         </svg>
                                         Lihat
-                                    </a>
-                                    <a href="#"
-                                        class="inline-flex items-center bg-yellow-600 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full hover:bg-yellow-500 transition duration-200 ease-in-out shadow-md text-xs sm:text-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                            class="size-4 mr-1">
-                                            <path
-                                                d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
-                                            <path
-                                                d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
-                                        </svg>
-                                        Ubah
                                     </a>
                                     <form action="#" method="POST">
                                         @csrf
